@@ -90,7 +90,7 @@ public class GameLaunch {
     }
 
     /**
-     * checks if there is any card that matches with top card in palyer's card deck("B card" is also accepted)
+     * checks if there is any card that matches with top card in player's card deck("B card" is also accepted)
      * @return true if there is and false if there isn't
      * */
     public boolean isThereAnyMatchingCard(){
@@ -254,123 +254,62 @@ public class GameLaunch {
      * */
     public void penaltyPick(Card card){
         Random randomChoice = new Random();
-        if(card instanceof RandomPick2Card){
+        if(card instanceof RandomPick2Card)
             pickNumberX2 += 1;
-            int choice = 0;
-            Scanner scanner = new Scanner(System.in);
-            if(pickNumberX2 < 4){
-                if(isThereAnyMatchWithPunishmentCard()){
-                    if((turn == 0 && playerMode == -1) || playerMode == 1){
-                        System.out.println(ANSI_RESET + "1.pick " + (((pickNumberX2) * 2) + (pickNumberX4 * 4)) +
-                                " random cards\n" +
-                                "2.give a card with number 7");
-                        choice = scanner.nextInt();
-                    }
-                    else
-                        choice = 2;
-                }
-                else{
-                    if((turn == 0 && playerMode == -1) || playerMode == 1)
-                        System.out.println(ANSI_RESET + "you don't have any card matching with top card\nSo...");
-                    choice = 1;
-                }
-                if(choice == 1){
-                    for (int i = 1; i <= ((pickNumberX2 * 2) + (pickNumberX4 * 4)); i++) {
-                        players.get(turn).addNewCard(pickRandomCard());
-                    }
-                    if((turn == 0 && playerMode == -1) || playerMode == 1){
-                        System.out.println(ANSI_RESET + ((pickNumberX2 * 2) + (pickNumberX4 * 4)) +
-                                " random cards have been added to your deck");
-                        Main.pressAnyKeyToContinue();
-                    }
-                    else{
-                        System.out.println(ANSI_RESET + ((pickNumberX2 * 2) + (pickNumberX4 * 4)) +
-                                " random cards have been added to player" + (turn + 1) + "'s deck");
-                        Main.pressAnyKeyToContinue();
-                    }
-                    pickNumberX2 = 0;
-                    pickNumberX4 = 0;
-                    pickCheck = false;
-                }
-                else {
-                    int enterChoice = 0;
-                    if((turn == 0 && playerMode == -1) || playerMode == 1){
-                        System.out.print(ANSI_RESET + "enter the number of card 7:");
-                        enterChoice = scanner.nextInt();
-                    }
-                    else{
-                        while (true){
-                            enterChoice = randomChoice.nextInt(players.get(turn).getNumberOfPlayerCards());
-                            if (players.get(turn).getCardWithOutRemove(enterChoice) instanceof RandomPick4card ||
-                                    players.get(turn).getCardWithOutRemove(enterChoice) instanceof RandomPick2Card)
-                                break;
-                        }
-                    }
-                    addCard(players.get(turn).getCardViaIndex(enterChoice - 1));
-                    pickCheck = true;
-                    moveToNextPlayer();
-                }
-            }
-        }
-        else if(card instanceof RandomPick4card){
+        else if(card instanceof RandomPick4card)
             pickNumberX4 += 1;
-            if(pickNumberX4 < 4){
-                Scanner scanner = new Scanner(System.in);
-                int choice = 0;
-                if(isThereAnyMatchWithPunishmentCard()){
-                    if((turn == 0 && playerMode == -1) || playerMode == 1){
-                        System.out.println(ANSI_RESET + "1.pick " + ((pickNumberX2 * 2) + (pickNumberX4 * 4)) +
-                                " random cards\n" +
-                                "2.give a card with number 7");
-                        choice = scanner.nextInt();
-                    }
-                    else
-                        choice = 2;
-                }
-                else{
-                    if((turn == 0 && playerMode == -1) || playerMode == 1)
-                        System.out.println(ANSI_RESET + "you don't have any card matching with top card\nSo...");
-                    choice = 1;
-                }
-                if(choice == 1){
-                    for (int i = 1; i <= ((pickNumberX2 * 2) + (pickNumberX4 * 4)); i++) {
-                        players.get(turn).addNewCard(pickRandomCard());
-                    }
-                    if((turn == 0 && playerMode == -1) || playerMode == 1){
-                        System.out.println(ANSI_RESET + ((pickNumberX2 * 2) + (pickNumberX4 * 4)) +
-                                " random cards have been added to your deck");
-                        Main.pressAnyKeyToContinue();
-                    }
-                    else{
-                        System.out.println(ANSI_RESET + ((pickNumberX2 * 2) + (pickNumberX4 * 4)) +
-                                " random cards have been added to player" + (turn + 1) + "'s deck");
-                        Main.pressAnyKeyToContinue();
-                    }
-                    pickNumberX2 = 0;
-                    pickNumberX4 = 0;
-                    pickCheck = false;
-                }
-                else {
-                    int enterChoice = 0;
-                    if((turn == 0 && playerMode == -1) || playerMode == 1){
-                        System.out.print(ANSI_RESET + "enter the number of card 7:");
-                        enterChoice = scanner.nextInt();
-                    }
-                    else{
-                        while (true){
-                            enterChoice = randomChoice.nextInt(players.get(turn).getNumberOfPlayerCards());
-                            if (players.get(turn).getCardWithOutRemove(enterChoice) instanceof RandomPick4card ||
-                                    players.get(turn).getCardWithOutRemove(enterChoice) instanceof RandomPick2Card){
-                                enterChoice += 1;
-                                break;
-                            }
-                        }
-                    }
-                    addCard(players.get(turn).getCardViaIndex(enterChoice - 1));
-                    pickCheck = true;
-                    moveToNextPlayer();
+        int choice = 0;
+        Scanner scanner = new Scanner(System.in);
+        if(isThereAnyMatchWithPunishmentCard()){
+            if((turn == 0 && playerMode == -1) || playerMode == 1){
+                System.out.println(ANSI_RESET + "1.pick " + (((pickNumberX2) * 2) + (pickNumberX4 * 4)) +
+                        " random cards\n" +
+                        "2.give a card with number 7");
+                choice = scanner.nextInt();
+            }
+            else
+                choice = 2;
+        }
+        else{
+            if((turn == 0 && playerMode == -1) || playerMode == 1)
+                System.out.println(ANSI_RESET + "you don't have any card matching with top card\nSo...");
+            choice = 1;
+        }
+        if(choice == 1){
+            for (int i = 1; i <= ((pickNumberX2 * 2) + (pickNumberX4 * 4)); i++) {
+                players.get(turn).addNewCard(pickRandomCard());
+            }
+            if((turn == 0 && playerMode == -1) || playerMode == 1){
+                System.out.println(ANSI_RESET + ((pickNumberX2 * 2) + (pickNumberX4 * 4)) +
+                        " random cards have been added to your deck");
+                Main.pressAnyKeyToContinue();
+            }
+            else{
+                System.out.println(ANSI_RESET + ((pickNumberX2 * 2) + (pickNumberX4 * 4)) +
+                        " random cards have been added to player" + (turn + 1) + "'s deck");
+                Main.pressAnyKeyToContinue();
+            }
+            pickNumberX2 = 0;
+            pickNumberX4 = 0;
+            pickCheck = false;
+        }
+        else {
+            int enterChoice = 0;
+            if((turn == 0 && playerMode == -1) || playerMode == 1){
+                System.out.print(ANSI_RESET + "enter the number of card 7:");
+                enterChoice = scanner.nextInt();
+            }
+            else{
+                while (true){
+                    enterChoice = randomChoice.nextInt(players.get(turn).getNumberOfPlayerCards());
+                    if (players.get(turn).getCardWithOutRemove(enterChoice) instanceof RandomPick4card ||
+                            players.get(turn).getCardWithOutRemove(enterChoice) instanceof RandomPick2Card)
+                        break;
                 }
             }
+            addCard(players.get(turn).getCardViaIndex(enterChoice - 1));
+            pickCheck = true;
+            moveToNextPlayer();
         }
     }
 
